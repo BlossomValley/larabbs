@@ -26,6 +26,7 @@ class VerificationCodesController extends Controller
             $response = $exception->getResponse();
             $result = json_decode($response->getBody()->getContents(), true);
             return $this->response->errorInternal($result['msg'] ?? '短信发送异常');
+            }
         }
 
         $key = 'verificationCode_'.str_random(15);
@@ -38,5 +39,4 @@ class VerificationCodesController extends Controller
             'expired_at' => $expiredAt->toDateTimeString(),
         ])->setStatusCode(201);
     }
-
 }
