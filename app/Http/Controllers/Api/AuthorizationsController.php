@@ -27,18 +27,6 @@ class AuthorizationsController extends Controller
         return $this->respondWithToken($token)->setStatusCode(201);
     }
 
-    public function update()
-{
-    $token = Auth::guard('api')->refresh();
-    return $this->respondWithToken($token);
-}
-
-public function destroy()
-{
-    Auth::guard('api')->logout();
-    return $this->response->noContent();
-}
-
     public function socialStore($type, SocialAuthorizationRequest $request)
     {
         if (!in_array($type, ['weixin'])) {
@@ -83,6 +71,18 @@ public function destroy()
 
         $token = Auth::guard('api')->fromUser($user);
         return $this->respondWithToken($token)->setStatusCode(201);
+    }
+
+        public function update()
+    {
+        $token = Auth::guard('api')->refresh();
+        return $this->respondWithToken($token);
+    }
+
+    public function destroy()
+    {
+        Auth::guard('api')->logout();
+        return $this->response->noContent();
     }
 
     protected function respondWithToken($token)
